@@ -57,7 +57,6 @@ AnalogClock::AnalogClock(QWidget *parent)
     : QWidget(parent)
 {
     timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTrigger()));
 
     isActive = false;
@@ -120,7 +119,6 @@ void AnalogClock::shortcutReset()
     {
         countdownCurrentValue = countdownSetValue;
         isActive = false;
-        QApplication::beep();
     }
 }
 //----------------------------------------
@@ -186,17 +184,8 @@ void AnalogClock::paintEvent(QPaintEvent *)
     painter.save();
     double start = 16.0 * 90.0;
     double end = -16.0 * 6.0 * (countdownCurrentValue.minute() + countdownCurrentValue.second() / 60.0);
-    painter.drawPie(rectangle,start,end);
+    painter.drawPie(rectangle, start, end);
     painter.restore();
-
-//Draw hour arrow
-//    painter.setPen(Qt::NoPen);
-//    painter.setBrush(hourColor);
-
-//    painter.save();
-//    painter.rotate(30.0 * ((countdownCurrentValue.hour() + countdownCurrentValue.minute() / 60.0)));
-//    painter.drawConvexPolygon(hourHand, 3);
-//    painter.restore();
 
 // Draw hour lines
     painter.setPen(hourColor);
