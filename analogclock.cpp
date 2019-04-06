@@ -142,11 +142,6 @@ void AnalogClock::shortcutNumber()
 //----------------------------------------
 void AnalogClock::paintEvent(QPaintEvent *)
 {
-    const QPoint hourHand[3] = {
-        QPoint(7, 8),
-        QPoint(-7, 8),
-        QPoint(0, -40)
-    };
     const QPoint minuteHand[3] = {
         QPoint(7, 8),
         QPoint(-7, 8),
