@@ -99,10 +99,9 @@ void AnalogClock::soundAlert()
 //----------------------------------------
 void AnalogClock::timerTrigger()
 {
-    if (countdownCurrentValue.minute() <= 0)
+    if (countdownCurrentValue.minute() == 0 and countdownCurrentValue.second() <= 0)
         timer->stop();
-
-    if (countdownCurrentValue.minute() > 0)
+    else
         countdownCurrentValue = countdownCurrentValue.addSecs(-30);
 
     this->soundAlert();
