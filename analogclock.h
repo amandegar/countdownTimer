@@ -62,7 +62,6 @@ class AnalogClock : public QWidget
 
 public:
     AnalogClock(QWidget *parent = 0);
-    ~AnalogClock(void);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -70,7 +69,7 @@ protected:
 private:
     QTime countdownCurrentValue, countdownSetValue, countdownTemporaryValue;
     QTimer *timer;
-    QLCDNumber *m_LCD;
+    QLCDNumber *minuteLCD;
     bool isActive;
 
 private slots:

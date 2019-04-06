@@ -58,7 +58,10 @@ AnalogClock::AnalogClock(QWidget *parent)
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+
     isActive = false;
+    countdownSetValue.setHMS(0,10,0);
+    countdownCurrentValue = countdownSetValue;
 
     setWindowTitle(tr("Countdown timer - Amir"));
     resize(600, 600);
@@ -75,11 +78,6 @@ AnalogClock::AnalogClock(QWidget *parent)
 //    vbox->addWidget(m_LCD);
 }
 //----------------------------------------
-AnalogClock::~AnalogClock()
-{
-    delete minuteLCD;
-}
-//----------------------------------------
 void AnalogClock::shortcutReset()
 {
     int ret = QMessageBox::warning(this, tr("Timer reset"),
@@ -87,8 +85,8 @@ void AnalogClock::shortcutReset()
                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (ret == QMessageBox::Yes)
     {
-        timer->stop();
         countdownCurrentValue = countdownSetValue;
+        isActive = false;
         QApplication::beep();
     }
 }
@@ -132,7 +130,7 @@ void AnalogClock::paintEvent(QPaintEvent *)
     const QColor pieInactiveColor = Qt::gray;
 
     int side = qMin(width(), height());
-    QTime time = QTime::currentTime();
+//    QTime time = QTime::currentTime();
 
 // Painter configuration
     QPainter painter(this);
@@ -141,7 +139,7 @@ void AnalogClock::paintEvent(QPaintEvent *)
     painter.scale(side / 200.0, side / 200.0);
 
 // Set LCD
-    minuteLCD->display(time.minute());
+    minuteLCD->display(countdownCurrentValue.minute());
 
 // Draw Pie
     painter.setPen(Qt::NoPen);
@@ -154,20 +152,20 @@ void AnalogClock::paintEvent(QPaintEvent *)
 
     painter.save();
     double start = 16.0 * 90.0;
-    double end = -16.0 * 6.0 * (time.minute() + time.second() / 60.0);
+    double end = -16.0 * 6.0 * (countdownCurrentValue.minute() + countdownCurrentValue.second() / 60.0);
 //    qDebug() << end;
     painter.drawPie(rectangle,start,end);
 //    painter.drawPie(rectangle,0*16,90*16);
     painter.restore();
 
 //Draw hour arrow
-    painter.setPen(Qt::NoPen);
-    painter.setBrush(hourColor);
+//    painter.setPen(Qt::NoPen);
+//    painter.setBrush(hourColor);
 
-    painter.save();
-    painter.rotate(30.0 * ((time.hour() + time.minute() / 60.0)));
-    painter.drawConvexPolygon(hourHand, 3);
-    painter.restore();
+//    painter.save();
+//    painter.rotate(30.0 * ((countdownCurrentValue.hour() + countdownCurrentValue.minute() / 60.0)));
+//    painter.drawConvexPolygon(hourHand, 3);
+//    painter.restore();
 
 // Draw hour lines
     painter.setPen(hourColor);
@@ -182,7 +180,7 @@ void AnalogClock::paintEvent(QPaintEvent *)
     painter.setBrush(minuteColor);
 
     painter.save();
-    painter.rotate(6.0 * (time.minute() + time.second() / 60.0));
+    painter.rotate(6.0 * (countdownCurrentValue.minute() + countdownCurrentValue.second() / 60.0));
     painter.drawConvexPolygon(minuteHand, 3);
     painter.restore();
 
@@ -194,5 +192,6 @@ void AnalogClock::paintEvent(QPaintEvent *)
             painter.drawLine(92, 0, 96, 0);
         painter.rotate(6.0);
     }
+    countdownCurrentValue = countdownCurrentValue.addSecs(-10);
 }
 //----------------------------------------
