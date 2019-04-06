@@ -57,7 +57,8 @@ AnalogClock::AnalogClock(QWidget *parent)
     : QWidget(parent)
 {
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+//    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(timerTrigger()));
 
     isActive = false;
     countdownSetValue.setHMS(0,10,0);
@@ -72,10 +73,42 @@ AnalogClock::AnalogClock(QWidget *parent)
     new QShortcut(QKeySequence(Qt::Key_0|Qt::Key_1|Qt::Key_2|Qt::Key_3), this, SLOT(shortcutNumber()));
 
 // LCD configuration
-//    QVBoxLayout *vbox = new QVBoxLayout(this);
     minuteLCD = new QLCDNumber(2, this);
     minuteLCD->setSizeIncrement(10,10);
+//    QVBoxLayout *vbox = new QVBoxLayout(this);
 //    vbox->addWidget(m_LCD);
+}
+//----------------------------------------
+void AnalogClock::soundAlert()
+{
+// 3 minutes alert
+    if (countdownCurrentValue.minute() == 3 and countdownCurrentValue.second() == 0)
+        QApplication::beep();
+
+// 2 minutes alert
+    if (countdownCurrentValue.minute() == 2 and countdownCurrentValue.second() == 0)
+        QApplication::beep();
+
+// 1 minute alert
+    if (countdownCurrentValue.minute() == 1 and countdownCurrentValue.second() == 0)
+        QApplication::beep();
+
+// <10 second alert
+    if (countdownCurrentValue.minute() == 0 and countdownCurrentValue.second() <= 10)
+        QApplication::beep();
+}
+//----------------------------------------
+void AnalogClock::timerTrigger()
+{
+    if (countdownCurrentValue.minute() <= 0)
+        isActive = false;
+
+    if (countdownCurrentValue.minute() > 0 and timer->isActive())
+    {
+        countdownCurrentValue = countdownCurrentValue.addSecs(-30);
+        this->soundAlert();
+        this->update();
+    }
 }
 //----------------------------------------
 void AnalogClock::shortcutReset()
@@ -153,9 +186,7 @@ void AnalogClock::paintEvent(QPaintEvent *)
     painter.save();
     double start = 16.0 * 90.0;
     double end = -16.0 * 6.0 * (countdownCurrentValue.minute() + countdownCurrentValue.second() / 60.0);
-//    qDebug() << end;
     painter.drawPie(rectangle,start,end);
-//    painter.drawPie(rectangle,0*16,90*16);
     painter.restore();
 
 //Draw hour arrow
@@ -192,6 +223,5 @@ void AnalogClock::paintEvent(QPaintEvent *)
             painter.drawLine(92, 0, 96, 0);
         painter.rotate(6.0);
     }
-    countdownCurrentValue = countdownCurrentValue.addSecs(-10);
 }
 //----------------------------------------

@@ -72,7 +72,10 @@ private:
     QLCDNumber *minuteLCD;
     bool isActive;
 
+    void soundAlert(void);
+
 private slots:
+    void timerTrigger(void);
     void shortcutReset(void);
     void shortcutStartStop(void);
     void shortcutNumber(void);
