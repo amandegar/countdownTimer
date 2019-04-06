@@ -58,10 +58,11 @@ AnalogClock::AnalogClock(QWidget *parent)
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-//    timer->start(1000);
+    isActive = false;
 
     setWindowTitle(tr("Countdown timer - Amir"));
     resize(600, 600);
+
 // Shortcuts
     new QShortcut(QKeySequence(Qt::Key_R), this, SLOT(shortcutReset()));
     new QShortcut(QKeySequence(Qt::Key_Space), this, SLOT(shortcutStartStop()));
@@ -69,14 +70,16 @@ AnalogClock::AnalogClock(QWidget *parent)
 
 // LCD configuration
 //    QVBoxLayout *vbox = new QVBoxLayout(this);
-    m_LCD = new QLCDNumber(3, this);
+    minuteLCD = new QLCDNumber(2, this);
+    minuteLCD->setSizeIncrement(10,10);
 //    vbox->addWidget(m_LCD);
 }
 //----------------------------------------
 AnalogClock::~AnalogClock()
 {
-    delete m_LCD;
+    delete minuteLCD;
 }
+//----------------------------------------
 void AnalogClock::shortcutReset()
 {
     int ret = QMessageBox::warning(this, tr("Timer reset"),
@@ -89,13 +92,20 @@ void AnalogClock::shortcutReset()
         QApplication::beep();
     }
 }
+//----------------------------------------
 void AnalogClock::shortcutStartStop()
 {
     if(timer->isActive())
-      timer->stop();
-     else
+    {
+        isActive = false;
+    }
+    else
+    {
+        isActive = true;
         timer->start(1000);
+    }
 }
+//----------------------------------------
 void AnalogClock::shortcutNumber()
 {
     qDebug() << "Q:Numbers" << countdownTemporaryValue.minute();
@@ -119,6 +129,7 @@ void AnalogClock::paintEvent(QPaintEvent *)
     const QColor hourColor = Qt::darkMagenta;
     const QColor minuteColor = Qt::green;
     const QColor pieColor = Qt::red;
+    const QColor pieInactiveColor = Qt::gray;
 
     int side = qMin(width(), height());
     QTime time = QTime::currentTime();
@@ -130,11 +141,16 @@ void AnalogClock::paintEvent(QPaintEvent *)
     painter.scale(side / 200.0, side / 200.0);
 
 // Set LCD
-    m_LCD->display(time.minute());
+    minuteLCD->display(time.minute());
 
 // Draw Pie
     painter.setPen(Qt::NoPen);
-    painter.setBrush(pieColor);
+    if (isActive)
+        painter.setBrush(pieColor);
+    else {
+        painter.setBrush(pieInactiveColor);
+        timer->stop();
+    }
 
     painter.save();
     double start = 16.0 * 90.0;

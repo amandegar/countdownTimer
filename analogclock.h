@@ -71,6 +71,7 @@ private:
     QTime countdownCurrentValue, countdownSetValue, countdownTemporaryValue;
     QTimer *timer;
     QLCDNumber *m_LCD;
+    bool isActive;
 
 private slots:
     void shortcutReset(void);
