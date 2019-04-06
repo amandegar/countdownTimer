@@ -70,12 +70,6 @@ AnalogClock::AnalogClock(QWidget *parent)
     new QShortcut(QKeySequence(Qt::Key_R), this, SLOT(shortcutReset()));
     new QShortcut(QKeySequence(Qt::Key_Space), this, SLOT(shortcutStartStop()));
     new QShortcut(QKeySequence(Qt::Key_0|Qt::Key_1|Qt::Key_2|Qt::Key_3), this, SLOT(shortcutNumber()));
-
-// LCD configuration
-    minuteLCD = new QLCDNumber(2, this);
-    minuteLCD->setSizeIncrement(10,10);
-//    QVBoxLayout *vbox = new QVBoxLayout(this);
-//    vbox->addWidget(m_LCD);
 }
 //----------------------------------------
 void AnalogClock::soundAlert()
@@ -162,8 +156,14 @@ void AnalogClock::paintEvent(QPaintEvent *)
     painter.translate(width() / 2, height() / 2);
     painter.scale(side / 200.0, side / 200.0);
 
-// Set LCD
-    minuteLCD->display(countdownCurrentValue.minute());
+// Digital countdown
+    QFont font = painter.font();
+    font.setPixelSize(32);
+    painter.setFont(font);
+
+    const QRect rect = QRect(-40, 20, 100, 50);
+    QRect boundingRect;
+    painter.drawText(rect, 0, countdownCurrentValue.toString("mm:ss"), &boundingRect);
 
 // Draw Pie
     painter.setPen(Qt::NoPen);
