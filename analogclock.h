@@ -70,7 +70,6 @@ private:
     QTime countdownCurrentValue, countdownSetValue, countdownTemporaryValue;
     QTimer *timer;
     QLCDNumber *minuteLCD;
-    bool isActive;
 
     void soundAlert(void);
 

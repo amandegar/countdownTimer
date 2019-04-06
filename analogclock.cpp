@@ -59,7 +59,7 @@ AnalogClock::AnalogClock(QWidget *parent)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTrigger()));
 
-    isActive = false;
+    timer->stop();
     countdownSetValue.setHMS(0,10,0);
     countdownCurrentValue = countdownSetValue;
 
@@ -100,14 +100,13 @@ void AnalogClock::soundAlert()
 void AnalogClock::timerTrigger()
 {
     if (countdownCurrentValue.minute() <= 0)
-        isActive = false;
+        timer->stop();
 
-    if (countdownCurrentValue.minute() > 0 and timer->isActive())
-    {
+    if (countdownCurrentValue.minute() > 0)
         countdownCurrentValue = countdownCurrentValue.addSecs(-30);
-        this->soundAlert();
-        this->update();
-    }
+
+    this->soundAlert();
+    this->update();
 }
 //----------------------------------------
 void AnalogClock::shortcutReset()
@@ -118,7 +117,7 @@ void AnalogClock::shortcutReset()
     if (ret == QMessageBox::Yes)
     {
         countdownCurrentValue = countdownSetValue;
-        isActive = false;
+        timer->stop();
     }
 }
 //----------------------------------------
@@ -126,11 +125,12 @@ void AnalogClock::shortcutStartStop()
 {
     if(timer->isActive())
     {
-        isActive = false;
+        timer->stop();
+        this->update();
     }
     else
     {
-        isActive = true;
+        this->update();
         timer->start(1000);
     }
 }
@@ -156,7 +156,6 @@ void AnalogClock::paintEvent(QPaintEvent *)
     const QColor pieInactiveColor = Qt::gray;
 
     int side = qMin(width(), height());
-//    QTime time = QTime::currentTime();
 
 // Painter configuration
     QPainter painter(this);
@@ -169,7 +168,7 @@ void AnalogClock::paintEvent(QPaintEvent *)
 
 // Draw Pie
     painter.setPen(Qt::NoPen);
-    if (isActive)
+    if (timer->isActive())
         painter.setBrush(pieColor);
     else {
         painter.setBrush(pieInactiveColor);
