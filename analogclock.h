@@ -70,6 +70,7 @@ private:
     QTime countdownCurrentValue, countdownSetValue, countdownTemporaryValue;
     QTimer *timer;
     QLCDNumber *minuteLCD;
+    bool topWindow = false;
 
     void soundAlert(void);
 
@@ -77,7 +78,9 @@ private slots:
     void timerTrigger(void);
     void shortcutReset(void);
     void shortcutStartStop(void);
+    void shortcutTopWindow(void);
     void shortcutNumber(void);
+    void shortcutAboutDialog(void);
 };
 
 #endif

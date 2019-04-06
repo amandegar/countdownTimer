@@ -56,6 +56,9 @@
 AnalogClock::AnalogClock(QWidget *parent)
     : QWidget(parent)
 {
+    this->setWindowFlags(windowFlags() | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+    topWindow = true;
+
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTrigger()));
 
@@ -63,12 +66,14 @@ AnalogClock::AnalogClock(QWidget *parent)
     countdownSetValue.setHMS(0,10,0);
     countdownCurrentValue = countdownSetValue;
 
-    setWindowTitle(tr("Countdown timer - Amir"));
+    setWindowTitle(tr("Fenikkusu Countdown timer"));
     resize(600, 600);
 
 // Shortcuts
     new QShortcut(QKeySequence(Qt::Key_R), this, SLOT(shortcutReset()));
     new QShortcut(QKeySequence(Qt::Key_Space), this, SLOT(shortcutStartStop()));
+    new QShortcut(QKeySequence(Qt::Key_T), this, SLOT(shortcutTopWindow()));
+    new QShortcut(QKeySequence(Qt::Key_A), this, SLOT(shortcutAboutDialog()));
     new QShortcut(QKeySequence(Qt::Key_0|Qt::Key_1|Qt::Key_2|Qt::Key_3), this, SLOT(shortcutNumber()));
 }
 //----------------------------------------
@@ -84,7 +89,10 @@ void AnalogClock::soundAlert()
 
 // 1 minute alert
     if (countdownCurrentValue.minute() == 1 and countdownCurrentValue.second() == 0)
+    {
         QApplication::beep();
+        this->activateWindow();
+    }
 
 // <10 second alert
     if (countdownCurrentValue.minute() == 0 and countdownCurrentValue.second() <= 10)
@@ -96,7 +104,7 @@ void AnalogClock::timerTrigger()
     if (countdownCurrentValue.minute() == 0 and countdownCurrentValue.second() <= 0)
         timer->stop();
     else
-        countdownCurrentValue = countdownCurrentValue.addSecs(-30);
+        countdownCurrentValue = countdownCurrentValue.addSecs(-60);
 
     this->soundAlert();
     this->update();
@@ -127,10 +135,39 @@ void AnalogClock::shortcutStartStop()
         timer->start(1000);
     }
 }
+
+void AnalogClock::shortcutTopWindow()
+{
+    if (!topWindow)
+    {
+        this->setWindowFlags(windowFlags() | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+        topWindow = true;
+    }
+    else
+    {
+        this->setWindowFlags(windowFlags() ^ (Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint));
+        topWindow = false;
+    }
+    show();
+}
 //----------------------------------------
 void AnalogClock::shortcutNumber()
 {
     qDebug() << "Q:Numbers" << countdownTemporaryValue.minute();
+}
+
+void AnalogClock::shortcutAboutDialog()
+{
+    QString aboutTxt("Powered by Qt 5.12\n"
+                     "Written by: Amir Hossein Mandegar\n"
+                     "\n---- Shortcuts ----\n"
+                     "Space: Start/Stop timer\n"
+                     "R: Reset timer\n"
+                     "D: Digital Timer hide/show\n"
+                     "T: Toggle Always on Top\n"
+                     "+/-: Resize window\n");
+
+    QMessageBox::about(this, "About Countdown timer", aboutTxt);
 }
 //----------------------------------------
 void AnalogClock::paintEvent(QPaintEvent *)
@@ -155,15 +192,6 @@ void AnalogClock::paintEvent(QPaintEvent *)
     painter.setRenderHint(QPainter::Antialiasing);
     painter.translate(width() / 2, height() / 2);
     painter.scale(side / 200.0, side / 200.0);
-
-// Digital countdown
-    QFont font = painter.font();
-    font.setPixelSize(32);
-    painter.setFont(font);
-
-    const QRect rect = QRect(-40, 20, 100, 50);
-    QRect boundingRect;
-    painter.drawText(rect, 0, countdownCurrentValue.toString("mm:ss"), &boundingRect);
 
 // Draw Pie
     painter.setPen(Qt::NoPen);
@@ -205,5 +233,19 @@ void AnalogClock::paintEvent(QPaintEvent *)
             painter.drawLine(92, 0, 96, 0);
         painter.rotate(6.0);
     }
+
+// Digital countdown
+    painter.setPen(hourColor);
+
+    QFont font = painter.font();
+    font.setPixelSize(32);
+    painter.setFont(font);
+
+    painter.drawText(QRect(-40, 20, 100, 50), 0, countdownCurrentValue.toString("mm:ss"));
+
+    font.setPixelSize(4);
+    painter.setFont(font);
+    painter.setPen(Qt::black);
+    painter.drawText(QRect(-100,95, 100, 50), 0, "Press (A) for about page");
 }
 //----------------------------------------
