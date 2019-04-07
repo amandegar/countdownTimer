@@ -158,7 +158,10 @@ void AnalogClock::shortcutNumber()
 
 void AnalogClock::shortcutAboutDialog()
 {
-    QString aboutTxt("Powered by Qt 5.12\n"
+    QString aboutTxt("Fenikkusu Countdown Timer\n"
+                     "Version 0.1 BETA\n"
+                     "April 2019\n"
+                     "Powered by Qt 5.12\n"
                      "Written by: Amir Hossein Mandegar\n"
                      "\n---- Shortcuts ----\n"
                      "Space: Start/Stop timer\n"
@@ -167,7 +170,7 @@ void AnalogClock::shortcutAboutDialog()
                      "T: Toggle Always on Top\n"
                      "+/-: Resize window\n");
 
-    QMessageBox::about(this, "About Countdown timer", aboutTxt);
+    QMessageBox::about(this, "About", aboutTxt);
 }
 //----------------------------------------
 void AnalogClock::paintEvent(QPaintEvent *)
