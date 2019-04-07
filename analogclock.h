@@ -53,7 +53,6 @@
 #define ANALOGCLOCK_H
 
 #include <QWidget>
-#include <QLCDNumber>
 #include <QTime>
 
 class AnalogClock : public QWidget
@@ -69,7 +68,6 @@ protected:
 private:
     QTime countdownCurrentValue, countdownSetValue, countdownTemporaryValue;
     QTimer *timer;
-    QLCDNumber *minuteLCD;
     bool topWindow = false;
 
     void soundAlert(void);
@@ -81,6 +79,9 @@ private slots:
     void shortcutTopWindow(void);
     void shortcutNumber(void);
     void shortcutAboutDialog(void);
+    void shortcutZoomIn(void);
+    void shortcutZoomOut(void);
+    void shortcutFullScreen(void);
 };
 
 #endif

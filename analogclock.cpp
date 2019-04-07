@@ -74,6 +74,9 @@ AnalogClock::AnalogClock(QWidget *parent)
     new QShortcut(QKeySequence(Qt::Key_Space), this, SLOT(shortcutStartStop()));
     new QShortcut(QKeySequence(Qt::Key_T), this, SLOT(shortcutTopWindow()));
     new QShortcut(QKeySequence(Qt::Key_A), this, SLOT(shortcutAboutDialog()));
+    new QShortcut(QKeySequence(Qt::Key_Plus), this, SLOT(shortcutZoomIn()));
+    new QShortcut(QKeySequence(Qt::Key_Minus), this, SLOT(shortcutZoomOut()));
+    new QShortcut(QKeySequence(Qt::Key_F), this, SLOT(shortcutFullScreen()));
     new QShortcut(QKeySequence(Qt::Key_0|Qt::Key_1|Qt::Key_2|Qt::Key_3), this, SLOT(shortcutNumber()));
 }
 //----------------------------------------
@@ -135,7 +138,7 @@ void AnalogClock::shortcutStartStop()
         timer->start(1000);
     }
 }
-
+//----------------------------------------
 void AnalogClock::shortcutTopWindow()
 {
     if (!topWindow)
@@ -155,7 +158,7 @@ void AnalogClock::shortcutNumber()
 {
     qDebug() << "Q:Numbers" << countdownTemporaryValue.minute();
 }
-
+//----------------------------------------
 void AnalogClock::shortcutAboutDialog()
 {
     QString aboutTxt("Fenikkusu Countdown Timer\n"
@@ -167,10 +170,35 @@ void AnalogClock::shortcutAboutDialog()
                      "Space: Start/Stop timer\n"
                      "R: Reset timer\n"
                      "D: Digital Timer hide/show\n"
-                     "T: Toggle Always on Top\n"
-                     "+/-: Resize window\n");
+                     "+/-: Resize window\n"
+                     "F: Toogle full screen\n"
+                     "T: Toggle Always on Top\n");
 
     QMessageBox::about(this, "About", aboutTxt);
+}
+
+void AnalogClock::shortcutZoomOut()
+{
+    QSize additionalSize(100,100);
+    this->resize(this->size() - additionalSize);
+}
+
+void AnalogClock::shortcutFullScreen()
+{
+    if (this->windowState().testFlag(Qt::WindowMaximized))
+        this->showNormal();
+    else
+        this->showMaximized();
+}
+//----------------------------------------
+void AnalogClock::shortcutZoomIn()
+{
+//    this->showFullScreen();
+//    this->resize(400,400);
+//    this->showMaximized();
+
+   QSize additionalSize(100,100);
+   this->resize(this->size() + additionalSize);
 }
 //----------------------------------------
 void AnalogClock::paintEvent(QPaintEvent *)
