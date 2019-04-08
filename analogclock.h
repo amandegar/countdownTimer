@@ -77,11 +77,21 @@ private slots:
     void shortcutReset(void);
     void shortcutStartStop(void);
     void shortcutTopWindow(void);
-    void shortcutNumber(void);
     void shortcutAboutDialog(void);
     void shortcutZoomIn(void);
     void shortcutZoomOut(void);
     void shortcutFullScreen(void);
+
+    void shortcutNumber0(void);
+    void shortcutNumber1(void);
+    void shortcutNumber2(void);
+    void shortcutNumber3(void);
+    void shortcutNumber4(void);
+    void shortcutNumber5(void);
+    void shortcutNumber6(void);
+    void shortcutNumber7(void);
+    void shortcutNumber8(void);
+    void shortcutNumber9(void);
 };
 
 #endif

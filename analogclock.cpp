@@ -64,7 +64,7 @@ AnalogClock::AnalogClock(QWidget *parent)
 
     timer->stop();
     countdownSetValue.setHMS(0,10,0);
-    countdownCurrentValue = countdownSetValue;
+    countdownTemporaryValue = countdownCurrentValue = countdownSetValue;
 
     setWindowTitle(tr("Fenikkusu Countdown timer"));
     resize(600, 600);
@@ -77,7 +77,17 @@ AnalogClock::AnalogClock(QWidget *parent)
     new QShortcut(QKeySequence(Qt::Key_Plus), this, SLOT(shortcutZoomIn()));
     new QShortcut(QKeySequence(Qt::Key_Minus), this, SLOT(shortcutZoomOut()));
     new QShortcut(QKeySequence(Qt::Key_F), this, SLOT(shortcutFullScreen()));
-    new QShortcut(QKeySequence(Qt::Key_0|Qt::Key_1|Qt::Key_2|Qt::Key_3), this, SLOT(shortcutNumber()));
+
+    new QShortcut(QKeySequence(Qt::Key_0), this, SLOT(shortcutNumber0()));
+    new QShortcut(QKeySequence(Qt::Key_1), this, SLOT(shortcutNumber1()));
+    new QShortcut(QKeySequence(Qt::Key_2), this, SLOT(shortcutNumber2()));
+    new QShortcut(QKeySequence(Qt::Key_3), this, SLOT(shortcutNumber3()));
+    new QShortcut(QKeySequence(Qt::Key_4), this, SLOT(shortcutNumber4()));
+    new QShortcut(QKeySequence(Qt::Key_5), this, SLOT(shortcutNumber5()));
+    new QShortcut(QKeySequence(Qt::Key_6), this, SLOT(shortcutNumber6()));
+    new QShortcut(QKeySequence(Qt::Key_7), this, SLOT(shortcutNumber7()));
+    new QShortcut(QKeySequence(Qt::Key_8), this, SLOT(shortcutNumber8()));
+    new QShortcut(QKeySequence(Qt::Key_9), this, SLOT(shortcutNumber9()));
 }
 //----------------------------------------
 void AnalogClock::soundAlert()
@@ -154,11 +164,6 @@ void AnalogClock::shortcutTopWindow()
     show();
 }
 //----------------------------------------
-void AnalogClock::shortcutNumber()
-{
-    qDebug() << "Q:Numbers" << countdownTemporaryValue.minute();
-}
-//----------------------------------------
 void AnalogClock::shortcutAboutDialog()
 {
     QString aboutTxt("Fenikkusu Countdown Timer\n"
@@ -176,13 +181,13 @@ void AnalogClock::shortcutAboutDialog()
 
     QMessageBox::about(this, "About", aboutTxt);
 }
-
+//----------------------------------------
 void AnalogClock::shortcutZoomOut()
 {
     QSize additionalSize(100,100);
     this->resize(this->size() - additionalSize);
 }
-
+//----------------------------------------
 void AnalogClock::shortcutFullScreen()
 {
     if (this->windowState().testFlag(Qt::WindowMaximized))
@@ -278,5 +283,55 @@ void AnalogClock::paintEvent(QPaintEvent *)
     painter.setFont(font);
     painter.setPen(Qt::black);
     painter.drawText(QRect(-100,95, 100, 50), 0, "Press (A) for about page");
+}
+//----------------------------------------
+void AnalogClock::shortcutNumber0()
+{
+
+}
+//----------------------------------------
+void AnalogClock::shortcutNumber1()
+{
+
+}
+//----------------------------------------
+void AnalogClock::shortcutNumber2()
+{
+
+}
+//----------------------------------------
+void AnalogClock::shortcutNumber3()
+{
+
+}
+//----------------------------------------
+void AnalogClock::shortcutNumber4()
+{
+
+}
+//----------------------------------------
+void AnalogClock::shortcutNumber5()
+{
+
+}
+//----------------------------------------
+void AnalogClock::shortcutNumber6()
+{
+
+}
+//----------------------------------------
+void AnalogClock::shortcutNumber7()
+{
+
+}
+//----------------------------------------
+void AnalogClock::shortcutNumber8()
+{
+
+}
+//----------------------------------------
+void AnalogClock::shortcutNumber9()
+{
+
 }
 //----------------------------------------
