@@ -54,6 +54,7 @@
 
 #include <QWidget>
 #include <QTime>
+#include "newtimedialog.h"
 
 class AnalogClock : public QWidget
 {
@@ -66,9 +67,10 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    QTime countdownCurrentValue, countdownSetValue, countdownTemporaryValue;
+    QTime countdownCurrentValue, countdownSetValue;
     QTimer *timer;
     bool topWindow = false;
+    newTimeDialog *timeDialog;
 
     void soundAlert(void);
 
@@ -81,17 +83,7 @@ private slots:
     void shortcutZoomIn(void);
     void shortcutZoomOut(void);
     void shortcutFullScreen(void);
-
-    void shortcutNumber0(void);
-    void shortcutNumber1(void);
-    void shortcutNumber2(void);
-    void shortcutNumber3(void);
-    void shortcutNumber4(void);
-    void shortcutNumber5(void);
-    void shortcutNumber6(void);
-    void shortcutNumber7(void);
-    void shortcutNumber8(void);
-    void shortcutNumber9(void);
+    void shortcutSetTimer(void);
 };
 
 #endif
