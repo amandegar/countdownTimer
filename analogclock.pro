@@ -1,8 +1,10 @@
 QT += widgets
 
-HEADERS       = analogclock.h
+HEADERS       = analogclock.h \
+    newtimedialog.h
 SOURCES       = analogclock.cpp \
-                main.cpp
+                main.cpp \
+    newtimedialog.cpp
 
 QMAKE_PROJECT_NAME = widgets_analogclock
 
