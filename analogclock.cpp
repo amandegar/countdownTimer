@@ -165,6 +165,7 @@ void AnalogClock::shortcutAboutDialog()
                      "Written by: Amir Hossein Mandegar\n"
                      "\n---- Shortcuts ----\n"
                      "Space: Start/Stop timer\n"
+                     "S: Set Timer Value\n"
                      "R: Reset timer\n"
                      "D: Digital Timer hide/show\n"
                      "+/-: Resize window\n"
