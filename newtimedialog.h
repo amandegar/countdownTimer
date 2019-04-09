@@ -5,20 +5,28 @@
 #include <QLCDNumber>
 #include <QDialogButtonBox>
 #include <QTime>
+#include <QVBoxLayout>
+#include <QShortcut>
+#include <QLabel>
 
 class newTimeDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    newTimeDialog(QWidget *parent = 0);
+    newTimeDialog(QWidget *parent);
+    int getMinute(void);
+
+protected:
+    virtual void showEvent(QShowEvent *event);
 
 private:
     QDialogButtonBox *buttonBox;
     QLCDNumber *lcdNumber;
+    QLabel *labelMaxMinute;
     QTime countdownTemporaryValue;
 
-    void addAndShiftLeft(int newNumber);
+    void shiftLeft(int newNumber);
 
 private slots:
     void shortcutNumber0(void);
