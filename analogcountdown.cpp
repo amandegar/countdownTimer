@@ -1,6 +1,6 @@
 #include <QtWidgets>
 
-#include "analogclock.h"
+#include "analogcountdown.h"
 //----------------------------------------
 AnalogCountdown::AnalogCountdown(QWidget *parent)
     : QWidget(parent)
@@ -65,7 +65,7 @@ void AnalogCountdown::timerTrigger()
     if (countdownCurrentValue.minute() == 0 and countdownCurrentValue.second() <= 0)
         timer->stop();
     else
-        countdownCurrentValue = countdownCurrentValue.addSecs(-60);
+        countdownCurrentValue = countdownCurrentValue.addSecs(-1);
 
     this->soundAlert();
     this->update();

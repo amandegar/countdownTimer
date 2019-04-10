@@ -51,7 +51,7 @@
 
 #include <QApplication>
 
-#include "analogclock.h"
+#include "analogcountdown.h"
 
 int main(int argc, char *argv[])
 {
