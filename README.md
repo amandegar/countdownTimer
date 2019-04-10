@@ -1,2 +1,2 @@
 # countdownTimer
-Countdown timer for meetings, workshop, event such as scrum ceremonies, design workshop etc
+Countdown timer for meetings, workshops, event such as scrum ceremonies, design workshops etc
