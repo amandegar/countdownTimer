@@ -1,4 +1,7 @@
 QT += widgets
+CONFIG += static
+QMAKE_CXXFLAGS += -static
+QMAKE_LFLAGS += -static
 
 HEADERS       = \
     newtimedialog.h \
@@ -9,4 +12,4 @@ SOURCES       = \
     analogcountdown.cpp
 
 QMAKE_PROJECT_NAME = widgets_analogcountdown
-
+RC_FILE = analogcountdown.rc

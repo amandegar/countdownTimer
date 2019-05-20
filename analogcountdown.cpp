@@ -17,7 +17,7 @@ AnalogCountdown::AnalogCountdown(QWidget *parent)
     countdownSetValue.setHMS(0,10,0);
     countdownCurrentValue = countdownSetValue;
 
-    setWindowTitle(tr("Fenikkusu Countdown timer"));
+    setWindowTitle(tr("Countdown timer"));
     resize(600, 600);
 
 // Shortcuts
@@ -111,7 +111,7 @@ void AnalogCountdown::shortcutTopWindow()
 //----------------------------------------
 void AnalogCountdown::shortcutAboutDialog()
 {
-    QString aboutTxt("Fenikkusu Countdown Timer\n"
+    QString aboutTxt("Countdown Timer\n"
                      "Version 0.1 BETA\n"
                      "April 2019\n"
                      "Powered by Qt 5.12\n"

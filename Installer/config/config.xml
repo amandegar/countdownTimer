@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>Analog Countdown</Name>
+    <Version>1.0.0</Version>
+    <Title>Analog Countdown</Title>
+    <Publisher>SportUP</Publisher>
+    <StartMenuDir>Analog Countdown</StartMenuDir>
+    <TargetDir>@HomeDir@/analogcountdown</TargetDir>
+</Installer>

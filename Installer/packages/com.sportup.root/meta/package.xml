@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>Analog Countdown</DisplayName>
+    <Description>Analog countdown timer is a collaboration tool to organize time for meetings, workshops and activities. For example this tools is very useful for Agile/SCRUM ceremonies, Design workshops, time bound bran storm sessions etc. Initially needs for proper countdown timer came from my team and i to organize time bound meetings. So this tools is a solution and is freely availale for anyone who has the same need. It would be wonderful to have you feedback, Please send your feedback to amandegar@gmail.com. Tools just has developed and additional feature will add to next verisions very soon.</Description>
+    <Version>1.0.0</Version>
+    <ReleaseDate>2019-05-20</ReleaseDate>
+    <Licenses>
+        <License name="GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007" file="license.txt" />
+    </Licenses>
+    <Default>true</Default>
+    <Script>installscript.qs</Script>
+    <UserInterfaces>
+        <UserInterface>page.ui</UserInterface>
+    </UserInterfaces>
+</Package>
