@@ -38,7 +38,7 @@ Component.prototype.createOperations = function()
 
     if (systemInfo.productType === "windows") {
         component.addOperation("CreateShortcut", "@TargetDir@/analogcountdown.exe", "@StartMenuDir@/AnalogCountdown.lnk",
-            "workingDirectory=@TargetDir@", "iconPath=@TargetDir@/timer.ico",
-            "description=Analog Countdown Timer");
+            "workingDirectory=@TargetDir@", "iconPath=@TargetDir@/analogcountdown.exe",
+            "iconId=0","description=Analog Countdown Timer");
     }
 }
